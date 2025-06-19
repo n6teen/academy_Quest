@@ -3,7 +3,7 @@ class TodosController < ApplicationController
 
   # GET /todos or /todos.json
   def index
-    @todos = Todo.all
+    @todos = Todo.order(created_at: :desc)
   end
 
   # GET /todos/1 or /todos/1.json
@@ -20,16 +20,24 @@ class TodosController < ApplicationController
   end
 
   # POST /todos or /todos.json
+    # POST /todos or /todos.json
   def create
-    @todo = Todo.new(todo_params)
-
+    @todo = Todo.new(todo_params.merge(status: false))
     respond_to do |format|
       if @todo.save
-        format.html { redirect_to @todo, notice: "Todo was successfully created." }
-        format.json { render :show, status: :created, location: @todo }
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.prepend("todos-list", partial: "todo", locals: { todo: @todo }),
+            turbo_stream.update("empty-state", partial: "empty_state", locals: { todos: Todo.all }),
+            turbo_stream.replace("new_todo", partial: "form", locals: { todo: Todo.new })
+          ]
+        end
+        format.html { redirect_to todo_url(@todo), notice: "Quest was successfully created." }
       else
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace("new_todo", partial: "form", locals: { todo: Todo.new })
+        }
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @todo.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -38,15 +46,14 @@ class TodosController < ApplicationController
   def update
     respond_to do |format|
       if @todo.update(todo_params)
-        format.html { redirect_to @todo, notice: "Todo was successfully updated." }
-        format.json { render :show, status: :ok, location: @todo }
+        format.html { redirect_to root_path, notice: "Quest updated successfully." }
+        format.json { render json: { status: @todo.status, message: "Quest updated successfully" }, status: :ok }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :edit }
         format.json { render json: @todo.errors, status: :unprocessable_entity }
       end
     end
   end
-
   # DELETE /todos/1 or /todos/1.json
   def destroy
     @todo.destroy!
