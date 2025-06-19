@@ -23,8 +23,12 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <main class="">
       <%= yield %>
+      <div class="fixed inset-0 z-[-1] overflow-hidden">
+        <div class="fixed h-96 w-96 -top-20 -left-20 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div class="fixed h-96 w-96 -bottom-20 -right-20 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+      </div>
     </main>
   </body>
 </html>
