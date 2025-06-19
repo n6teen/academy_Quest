@@ -1,0 +1,70 @@
+<div class="min-h-screen w-screen">
+   <div class="w-screen flex items-center justify-center z-10">
+  <div class="w-full max-w-4xl mx-auto p-6 mt-4">
+    <!-- Header Card -->
+    <div class="bg-white rounded-2xl shadow-sm mb-8 p-6">
+      <h2 class="text-2xl font-bold text-gray-900 mb-3 text-center">My Brag Document 2025</h2>
+      <div class="h-1 w-32 bg-blue-500 mx-auto mb-6 rounded-full"></div>
+      
+      <!-- Goals List -->
+    <ul class="space-y-4">
+      <% [
+        { emoji: '🎯', text: 'เข้าใจการทำงานของโปรเจค BETs แบบถ่องแท้ เพื่อให้สามารถพัฒนาและดูแลระบบต่อได้แบบฟินๆ' },
+        { emoji: '📈', text: 'ศึกษาเรื่องการเงินการลงทุนเพิ่มขึ้น เพื่อตัวเอง และเพื่อซัพพอร์ตกับลักษณะงานของทีม' },
+        { emoji: '💰', text: 'ลงทุนกับหุ้นสักตัว' },
+        { emoji: '💻', text: 'มีโปรเจค RoR ที่พัฒนาด้วยตัวเองอย่างน้อย 1 โปรเจค' },
+        { emoji: '🏃', text: 'ออกกำลังกายให้ได้สัปดาห์ละ 150 นาที' }
+      ].each do |item| %>
+        <li class="bg-white rounded-xl shadow-sm p-4">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-blue-100 rounded-xl">
+            <span class="text-2xl"><%= item[:emoji] %></span>
+          </div>
+          <span class="ml-4 text-gray-700"><%= item[:text] %></span>
+        </div>
+        </li>
+      <% end %>
+    </ul>
+
+      <!-- Back Button -->
+      <div class="text-center mt-8">
+        <%= link_to "Back", todos_path, 
+            class: "inline-block px-6 py-2 bg-blue-100 text-blue-600 font-medium text-sm border border-blue-200 rounded-full hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors",
+            data: { 
+                testid: "back-button"
+            }
+        %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<% content_for :head do %>
+    <style>
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        
+        @keyframes gradient-x {
+            0% { background-size: 100% 100%; }
+            50% { background-size: 200% 100%; }
+            100% { background-size: 100% 100%; }
+        }
+
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+
+        .animate-gradient-x {
+            animation: gradient-x 15s ease infinite;
+        }
+
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+    </style>
+<% end %>
