@@ -20,7 +20,7 @@ class TodosController < ApplicationController
   end
 
   # POST /todos or /todos.json
-    # POST /todos or /todos.json
+  # POST /todos or /todos.json
   def create
     @todo = Todo.new(todo_params.merge(status: false))
     respond_to do |format|
